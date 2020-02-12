@@ -1,27 +1,33 @@
 s = open("02.txt","r")
 r = open("03.txt", "w")
-
-thisKey = ""
-thisValue = 0.0
-
-for line in s:
-  data = line.strip().split('\t')
-  store, amount = data
-
-  if store != thisKey:
-    if thisKey:
-      # output the last key value pair result
-      r.write(thisKey + '\t' + str(thisValue)+'\n')
-
-    # start over when changing keys
-    thisKey = store 
-    thisValue = 0.0
+d = dict() 
   
-  # apply the aggregation function
-  thisValue += float(amount)
+# Loop through each line of the file 
+for line in s: 
+    # Remove the leading spaces and newline character 
+    line = line.strip() 
+  
+    # Convert the characters in line to  
+    # lowercase to avoid case mismatch 
+    line = line.lower() 
+  
+    # Split the line into words 
+    words = line.split(" ") 
+  
+    # Iterate over each word in line 
+    for word in words: 
+        # Check if the word is already in dictionary 
+        if word in d: 
+            # Increment count of word by 1 
+            d[word] = d[word] + 1
+        else: 
+            # Add the word to dictionary with count 1 
+            d[word] = 1
+  
+# Print the contents of dictionary 
+for key in list(d.keys()): 
+    print(key, ":", d[key]) 
 
-# output the final entry when done
-r.write(thisKey + '\t' + str(thisValue)+'\n')
 
 s.close()
 r.close()
